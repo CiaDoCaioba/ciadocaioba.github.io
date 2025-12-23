@@ -107,13 +107,28 @@ footer{background:#00205b;color:white;text-align:center;padding:10px}
 <footer>Projeto Airbus Database — Caio 🚀</footer>
 
 <script>
-function show(src){
-  document.getElementById("img").src = src;
+<script>
+function show(file){
+  const img = document.getElementById("img");
+
+  img.src =
+    "https://commons.wikimedia.org/wiki/Special:FilePath/" +
+    encodeURIComponent(file) +
+    "?width=1200";
+
+  img.onerror = () => {
+    img.src =
+      "https://commons.wikimedia.org/wiki/Special:FilePath/Airbus_A320.jpg?width=1200";
+  };
+
   document.getElementById("modal").style.display = "flex";
 }
+
 function closeModal(){
   document.getElementById("modal").style.display = "none";
 }
+</script>
+
 </script>
 
 </body>

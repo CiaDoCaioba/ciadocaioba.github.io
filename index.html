@@ -4,237 +4,47 @@
 <meta charset="UTF-8">
 <title>Airbus Database</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Banco de dados dos aviões comerciais da Airbus">
 
-<!-- Chart.js -->
+<meta name="description" content="Banco de dados completo dos aviões Airbus">
+<meta name="theme-color" content="#00205b">
+<link rel="manifest" href="manifest.json">
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
-:root {
-    --bg: #f4f6f8;
-    --text: #333;
-    --primary: #00205b;
-    --card: #ffffff;
-    --border: #d1d5db;
-}
-
-body {
-    margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-}
-
-header {
-    background: var(--primary);
-    color: white;
-    padding: 25px;
-    text-align: center;
-}
-
-nav {
-    margin-top: 10px;
-}
-
-nav a {
-    color: white;
-    margin: 0 12px;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-main {
-    max-width: 1200px;
-    margin: auto;
-    padding: 20px;
-}
-
-section {
-    margin-bottom: 60px;
-}
-
-.controls {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 15px;
-}
-
-input, select {
-    padding: 10px;
-    font-size: 16px;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: var(--card);
-}
-
-th, td {
-    padding: 12px;
-    border: 1px solid var(--border);
-    text-align: center;
-}
-
-th {
-    background: #e5e7eb;
-}
-
-tr:hover {
-    background: rgba(0,0,0,0.05);
-}
-
-canvas {
-    background: white;
-    padding: 15px;
-    margin-top: 30px;
-}
-
-footer {
-    text-align: center;
-    padding: 20px;
-    background: var(--primary);
-    color: white;
-}
+body{margin:0;font-family:Arial;background:#f4f6f8}
+header,footer{background:#00205b;color:white;padding:20px;text-align:center}
+table{width:100%;border-collapse:collapse;background:white}
+th,td{border:1px solid #ccc;padding:8px;text-align:center}
+tr:hover{background:#eee;cursor:pointer}
 </style>
 </head>
 
 <body>
 
 <header>
-    <h1>✈️ Airbus Database</h1>
-    <p>Aviões comerciais • Motores • Capacidade máxima</p>
-    <nav>
-        <a href="#tabela">Tabela</a>
-        <a href="#graficos">Gráficos</a>
-    </nav>
+<h1>✈️ Airbus Database (PWA)</h1>
+<p>Clique em um avião</p>
 </header>
 
-<main>
+<table id="table"></table>
 
-<!-- ================= TABELA ================= -->
-<section id="tabela">
-    <h2>📋 Lista de Aeronaves</h2>
-
-    <div class="controls">
-        <input type="text" id="search" placeholder="Buscar modelo...">
-        <select id="familyFilter">
-            <option value="">Todas as famílias</option>
-            <option value="A220">A220</option>
-            <option value="A300">A300</option>
-            <option value="A310">A310</option>
-            <option value="A320">A320</option>
-            <option value="A330">A330</option>
-            <option value="A340">A340</option>
-            <option value="A350">A350</option>
-            <option value="A380">A380</option>
-        </select>
-    </div>
-
-    <table>
-        <thead>
-            <tr>
-                <th>Modelo</th>
-                <th>Família</th>
-                <th>Motores</th>
-                <th>Capacidade Máxima</th>
-            </tr>
-        </thead>
-        <tbody id="tableBody"></tbody>
-    </table>
-</section>
-
-<!-- ================= GRÁFICOS ================= -->
-<section id="graficos">
-    <h2>📊 Gráficos Interativos</h2>
-
-    <canvas id="capacityChart"></canvas>
-    <canvas id="engineChart"></canvas>
-</section>
-
-</main>
-
-<footer>
-    <p>Projeto educativo • Criado por Caio • Airbus Database</p>
-</footer>
+<footer>Projeto Caio</footer>
 
 <script>
-const aircrafts = [
-    { model: "A220-100", family: "A220", engines: 2, capacity: 135 },
-    { model: "A220-300", family: "A220", engines: 2, capacity: 160 },
-
-    { model: "A300B1", family: "A300", engines: 2, capacity: 300 },
-    { model: "A300B2", family: "A300", engines: 2, capacity: 250 },
-    { model: "A300B4", family: "A300", engines: 2, capacity: 270 },
-    { model: "A300-600", family: "A300", engines: 2, capacity: 270 },
-
-    { model: "A310-200", family: "A310", engines: 2, capacity: 220 },
-    { model: "A310-300", family: "A310", engines: 2, capacity: 240 },
-
-    { model: "A318", family: "A320", engines: 2, capacity: 132 },
-    { model: "A319ceo", family: "A320", engines: 2, capacity: 160 },
-    { model: "A320neo", family: "A320", engines: 2, capacity: 195 },
-    { model: "A321neo", family: "A320", engines: 2, capacity: 240 },
-
-    { model: "A330-300", family: "A330", engines: 2, capacity: 300 },
-    { model: "A350-1000", family: "A350", engines: 2, capacity: 410 },
-    { model: "A380-800", family: "A380", engines: 4, capacity: 853 }
+const aircrafts=[
+{m:"A220-100",e:2,c:135},{m:"A320neo",e:2,c:195},{m:"A350-1000",e:2,c:410},{m:"A380-800",e:4,c:853}
 ];
 
-// ---------- TABELA ----------
-const tableBody = document.getElementById("tableBody");
-const searchInput = document.getElementById("search");
-const familyFilter = document.getElementById("familyFilter");
+const t=document.getElementById("table");
+t.innerHTML="<tr><th>Modelo</th><th>Motores</th><th>Capacidade</th></tr>";
+aircrafts.forEach(a=>{
+t.innerHTML+=`<tr><td>${a.m}</td><td>${a.e}</td><td>${a.c}</td></tr>`;
+});
 
-function renderTable() {
-    const text = searchInput.value.toLowerCase();
-    const family = familyFilter.value;
-    tableBody.innerHTML = "";
-
-    aircrafts
-        .filter(a =>
-            a.model.toLowerCase().includes(text) &&
-            (family === "" || a.family === family)
-        )
-        .forEach(a => {
-            tableBody.innerHTML += `
-                <tr>
-                    <td>${a.model}</td>
-                    <td>${a.family}</td>
-                    <td>${a.engines}</td>
-                    <td>${a.capacity}</td>
-                </tr>
-            `;
-        });
+if("serviceWorker"in navigator){
+navigator.serviceWorker.register("service-worker.js");
 }
-
-searchInput.addEventListener("input", renderTable);
-familyFilter.addEventListener("change", renderTable);
-renderTable();
-
-// ---------- GRÁFICOS ----------
-new Chart(document.getElementById("capacityChart"), {
-    type: "bar",
-    data: {
-        labels: aircrafts.map(a => a.model),
-        datasets: [{
-            label: "Capacidade Máxima de Passageiros",
-            data: aircrafts.map(a => a.capacity)
-        }]
-    }
-});
-
-new Chart(document.getElementById("engineChart"), {
-    type: "pie",
-    data: {
-        labels: aircrafts.map(a => a.model),
-        datasets: [{
-            label: "Quantidade de Motores",
-            data: aircrafts.map(a => a.engines)
-        }]
-    }
-});
 </script>
 
 </body>

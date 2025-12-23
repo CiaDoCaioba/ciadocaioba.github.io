@@ -22,19 +22,30 @@ tr:hover{background:#e6ecff;cursor:pointer}
   justify-content:center;
   z-index:999
 }
-#modal img{
+#modalContent{
+  background:black;
+  padding:10px;
+  border-radius:12px;
   max-width:90vw;
   max-height:90vh;
-  border-radius:12px;
-  box-shadow:0 0 40px black
+  text-align:center
+}
+#modal img{
+  max-width:100%;
+  max-height:80vh;
+  border-radius:10px
 }
 #close{
+  color:white;
+  font-size:28px;
+  cursor:pointer;
   position:absolute;
   top:20px;
-  right:30px;
+  right:30px
+}
+#msg{
   color:white;
-  font-size:32px;
-  cursor:pointer
+  padding:20px
 }
 </style>
 </head>
@@ -43,63 +54,71 @@ tr:hover{background:#e6ecff;cursor:pointer}
 
 <header>
 <h1>✈️ Airbus Database</h1>
-<p>Clique em qualquer avião para ver a imagem real</p>
+<p>Clique em qualquer avião para ver a imagem oficial</p>
 </header>
 
 <table>
-<tr>
-<th>Modelo</th>
-<th>Motores</th>
-<th>Capacidade Máx.</th>
-</tr>
+<tr><th>Modelo</th><th>Motores</th><th>Capacidade</th></tr>
 
-<tr onclick="showImg('Airbus_A220-100.jpg')"><td>A220-100</td><td>2</td><td>135</td></tr>
-<tr onclick="showImg('Airbus_A220-300.jpg')"><td>A220-300</td><td>2</td><td>160</td></tr>
+<tr onclick="showPlane('Airbus A220-100')"><td>A220-100</td><td>2</td><td>135</td></tr>
+<tr onclick="showPlane('Airbus A220-300')"><td>A220-300</td><td>2</td><td>160</td></tr>
 
-<tr onclick="showImg('Airbus_A300B4.jpg')"><td>A300B4</td><td>2</td><td>270</td></tr>
-<tr onclick="showImg('Airbus_A300-600.jpg')"><td>A300-600</td><td>2</td><td>270</td></tr>
-<tr onclick="showImg('Airbus_Beluga_ST.jpg')"><td>A300-600ST Beluga</td><td>2</td><td>Carga</td></tr>
+<tr onclick="showPlane('Airbus A300')"><td>A300</td><td>2</td><td>270</td></tr>
+<tr onclick="showPlane('Airbus A310')"><td>A310</td><td>2</td><td>220</td></tr>
 
-<tr onclick="showImg('Airbus_A310-300.jpg')"><td>A310-300</td><td>2</td><td>220</td></tr>
+<tr onclick="showPlane('Airbus A318')"><td>A318</td><td>2</td><td>132</td></tr>
+<tr onclick="showPlane('Airbus A319')"><td>A319</td><td>2</td><td>160</td></tr>
+<tr onclick="showPlane('Airbus A320')"><td>A320</td><td>2</td><td>180</td></tr>
+<tr onclick="showPlane('Airbus A321')"><td>A321</td><td>2</td><td>220</td></tr>
 
-<tr onclick="showImg('Airbus_A318.jpg')"><td>A318</td><td>2</td><td>132</td></tr>
-<tr onclick="showImg('Airbus_A319.jpg')"><td>A319ceo</td><td>2</td><td>160</td></tr>
-<tr onclick="showImg('Airbus_A320.jpg')"><td>A320ceo</td><td>2</td><td>180</td></tr>
-<tr onclick="showImg('Airbus_A321.jpg')"><td>A321ceo</td><td>2</td><td>220</td></tr>
+<tr onclick="showPlane('Airbus A321XLR')"><td>A321XLR</td><td>2</td><td>220</td></tr>
 
-<tr onclick="showImg('Airbus_A320neo.jpg')"><td>A320neo</td><td>2</td><td>195</td></tr>
-<tr onclick="showImg('Airbus_A321neo.jpg')"><td>A321neo</td><td>2</td><td>240</td></tr>
-<tr onclick="showImg('Airbus_A321XLR.jpg')"><td>A321XLR</td><td>2</td><td>220</td></tr>
+<tr onclick="showPlane('Airbus A330')"><td>A330</td><td>2</td><td>300</td></tr>
+<tr onclick="showPlane('Airbus A340')"><td>A340</td><td>4</td><td>380</td></tr>
 
-<tr onclick="showImg('Airbus_A330-300.jpg')"><td>A330-300</td><td>2</td><td>300</td></tr>
-<tr onclick="showImg('Airbus_A330-900.jpg')"><td>A330-900neo</td><td>2</td><td>287</td></tr>
-
-<tr onclick="showImg('Airbus_A340-600.jpg')"><td>A340-600</td><td>4</td><td>380</td></tr>
-
-<tr onclick="showImg('Airbus_A350-900.jpg')"><td>A350-900</td><td>2</td><td>325</td></tr>
-<tr onclick="showImg('Airbus_A350-1000.jpg')"><td>A350-1000</td><td>2</td><td>410</td></tr>
-
-<tr onclick="showImg('Airbus_A380.jpg')"><td>A380-800</td><td>4</td><td>853</td></tr>
+<tr onclick="showPlane('Airbus A350')"><td>A350</td><td>2</td><td>410</td></tr>
+<tr onclick="showPlane('Airbus A380')"><td>A380</td><td>4</td><td>853</td></tr>
 </table>
 
 <div id="modal">
-<span id="close" onclick="closeImg()">✖</span>
-<img id="img">
+<span id="close" onclick="closeModal()">✖</span>
+<div id="modalContent">
+<img id="img" style="display:none">
+<div id="msg"></div>
+</div>
 </div>
 
 <script>
-function showImg(file){
+function showPlane(title){
   const img = document.getElementById("img");
-  img.src =
-    "https://commons.wikimedia.org/wiki/Special:FilePath/" +
-    encodeURIComponent(file) +
-    "?width=1600";
+  const msg = document.getElementById("msg");
 
-  document.getElementById("modal").style.display = "flex";
+  img.style.display="none";
+  msg.innerText="Carregando imagem oficial…";
+
+  document.getElementById("modal").style.display="flex";
+
+  fetch(
+    "https://pt.wikipedia.org/api/rest_v1/page/summary/" +
+    encodeURIComponent(title)
+  )
+  .then(r=>r.json())
+  .then(d=>{
+    if(d.thumbnail){
+      img.src = d.thumbnail.source;
+      img.style.display="block";
+      msg.innerText="";
+    }else{
+      msg.innerText="Imagem não disponível para este modelo.";
+    }
+  })
+  .catch(()=>{
+    msg.innerText="Erro ao carregar imagem.";
+  });
 }
 
-function closeImg(){
-  document.getElementById("modal").style.display = "none";
+function closeModal(){
+  document.getElementById("modal").style.display="none";
 }
 </script>
 

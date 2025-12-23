@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Airbus Database</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="description" content="Banco de dados completo dos aviões Airbus">
+<meta name="theme-color" content="#00205b">
+<link rel="manifest" href="manifest.json">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+body{margin:0;font-family:Arial;background:#f4f6f8}
+header,footer{background:#00205b;color:white;padding:20px;text-align:center}
+table{width:100%;border-collapse:collapse;background:white}
+th,td{border:1px solid #ccc;padding:8px;text-align:center}
+tr:hover{background:#eee;cursor:pointer}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>✈️ Airbus Database (PWA)</h1>
+<p>Clique em um avião</p>
+</header>
+
+<table id="table"></table>
+
+<footer>Projeto Caio</footer>
+
+<script>
+const aircrafts=[
+{m:"A220-100",e:2,c:135},{m:"A320neo",e:2,c:195},{m:"A350-1000",e:2,c:410},{m:"A380-800",e:4,c:853}
+];
+
+const t=document.getElementById("table");
+t.innerHTML="<tr><th>Modelo</th><th>Motores</th><th>Capacidade</th></tr>";
+aircrafts.forEach(a=>{
+t.innerHTML+=`<tr><td>${a.m}</td><td>${a.e}</td><td>${a.c}</td></tr>`;
+});
+
+if("serviceWorker"in navigator){
+navigator.serviceWorker.register("service-worker.js");
+}
+</script>
+
+</body>
+</html>

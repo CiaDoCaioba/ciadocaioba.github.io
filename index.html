@@ -4,45 +4,101 @@
 <meta charset="UTF-8">
 <title>Airbus Database</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<meta name="description" content="Banco de dados completo dos aviões Airbus">
 <meta name="theme-color" content="#00205b">
 <link rel="manifest" href="manifest.json">
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 <style>
 body{margin:0;font-family:Arial;background:#f4f6f8}
-header,footer{background:#00205b;color:white;padding:20px;text-align:center}
+header{background:#00205b;color:white;padding:20px;text-align:center}
 table{width:100%;border-collapse:collapse;background:white}
 th,td{border:1px solid #ccc;padding:8px;text-align:center}
-tr:hover{background:#eee;cursor:pointer}
+tr:hover{background:#eef;cursor:pointer}
+footer{background:#00205b;color:white;text-align:center;padding:10px}
+#modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;
+background:rgba(0,0,0,.8);align-items:center;justify-content:center}
+#modal img{max-width:90%;max-height:90%;border-radius:10px}
 </style>
 </head>
 
 <body>
 
 <header>
-<h1>✈️ Airbus Database (PWA)</h1>
-<p>Clique em um avião</p>
+<h1>✈️ Airbus Database</h1>
+<p>Todos os aviões Airbus — clique para ver</p>
 </header>
 
-<table id="table"></table>
+<table id="table">
+<tr>
+<th>Modelo</th>
+<th>Motores</th>
+<th>Capacidade Máx.</th>
+</tr>
+</table>
 
-<footer>Projeto Caio</footer>
+<div id="modal" onclick="this.style.display='none'">
+<img id="planeImg">
+</div>
+
+<footer>Projeto Caio 🚀</footer>
 
 <script>
-const aircrafts=[
-{m:"A220-100",e:2,c:135},{m:"A320neo",e:2,c:195},{m:"A350-1000",e:2,c:410},{m:"A380-800",e:4,c:853}
+const planes = [
+{m:"A220-100",e:2,c:135},
+{m:"A220-300",e:2,c:160},
+
+{m:"A300B1",e:2,c:250},
+{m:"A300B2",e:2,c:250},
+{m:"A300B4",e:2,c:270},
+{m:"A300-600",e:2,c:270},
+{m:"A300-600ST Beluga",e:2,c:0},
+
+{m:"A310-200",e:2,c:220},
+{m:"A310-300",e:2,c:220},
+
+{m:"A318",e:2,c:132},
+{m:"A319ceo",e:2,c:160},
+{m:"A319neo",e:2,c:160},
+{m:"A320ceo",e:2,c:180},
+{m:"A320neo",e:2,c:195},
+{m:"A321ceo",e:2,c:220},
+{m:"A321neo",e:2,c:240},
+{m:"A321LR",e:2,c:220},
+{m:"A321XLR",e:2,c:220},
+
+{m:"A330-200",e:2,c:280},
+{m:"A330-300",e:2,c:300},
+{m:"A330-800 neo",e:2,c:257},
+{m:"A330-900 neo",e:2,c:287},
+{m:"A330-743L BelugaXL",e:2,c:0},
+
+{m:"A340-200",e:4,c:261},
+{m:"A340-300",e:4,c:295},
+{m:"A340-500",e:4,c:313},
+{m:"A340-600",e:4,c:380},
+
+{m:"A350-900",e:2,c:325},
+{m:"A350-1000",e:2,c:410},
+
+{m:"A380-800",e:4,c:853}
 ];
 
-const t=document.getElementById("table");
-t.innerHTML="<tr><th>Modelo</th><th>Motores</th><th>Capacidade</th></tr>";
-aircrafts.forEach(a=>{
-t.innerHTML+=`<tr><td>${a.m}</td><td>${a.e}</td><td>${a.c}</td></tr>`;
+const table=document.getElementById("table");
+planes.forEach(p=>{
+table.innerHTML+=`
+<tr onclick="showImg('${p.m}')">
+<td>${p.m}</td>
+<td>${p.e}</td>
+<td>${p.c}</td>
+</tr>`;
 });
 
-if("serviceWorker"in navigator){
+function showImg(model){
+const img=document.getElementById("planeImg");
+img.src="https://source.unsplash.com/1200x800/?airbus,"+encodeURIComponent(model);
+document.getElementById("modal").style.display="flex";
+}
+
+if("serviceWorker" in navigator){
 navigator.serviceWorker.register("service-worker.js");
 }
 </script>

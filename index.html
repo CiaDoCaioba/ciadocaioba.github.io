@@ -4,19 +4,38 @@
 <meta charset="UTF-8">
 <title>Airbus Database</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#00205b">
-<link rel="manifest" href="manifest.json">
 
 <style>
-body{margin:0;font-family:Arial;background:#f4f6f8}
+body{margin:0;font-family:Arial;background:#f2f4f7}
 header{background:#00205b;color:white;padding:20px;text-align:center}
 table{width:100%;border-collapse:collapse;background:white}
 th,td{border:1px solid #ccc;padding:8px;text-align:center}
-tr:hover{background:#eef;cursor:pointer}
+tr:hover{background:#e6ecff;cursor:pointer}
 footer{background:#00205b;color:white;text-align:center;padding:10px}
-#modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;
-background:rgba(0,0,0,.8);align-items:center;justify-content:center}
-#modal img{max-width:90%;max-height:90%;border-radius:10px}
+
+#modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.85);
+  align-items:center;
+  justify-content:center;
+  z-index:10
+}
+#modal img{
+  width:85vw;
+  max-width:1200px;
+  border-radius:12px;
+  box-shadow:0 0 40px black
+}
+#modal span{
+  position:absolute;
+  top:20px;
+  right:30px;
+  color:white;
+  font-size:32px;
+  cursor:pointer
+}
 </style>
 </head>
 
@@ -24,82 +43,76 @@ background:rgba(0,0,0,.8);align-items:center;justify-content:center}
 
 <header>
 <h1>✈️ Airbus Database</h1>
-<p>Todos os aviões Airbus — clique para ver</p>
+<p>Todos os aviões Airbus — clique para ver a imagem real</p>
 </header>
 
-<table id="table">
+<table>
 <tr>
 <th>Modelo</th>
 <th>Motores</th>
 <th>Capacidade Máx.</th>
 </tr>
+
+<!-- A220 -->
+<tr onclick="show('https://upload.wikimedia.org/wikipedia/commons/6/65/Airbus_A220-100.jpg')"><td>A220-100</td><td>2</td><td>135</td></tr>
+<tr onclick="show('https://upload.wikimedia.org/wikipedia/commons/2/25/Airbus_A220-300.jpg')"><td>A220-300</td><td>2</td><td>160</td></tr>
+
+<!-- A300 / A310 -->
+<tr onclick="show('https://upload.wikimedia.org/wikipedia/commons/5/5f/Airbus_A300B1.jpg')"><td>A300B1</td><td>2</td><td>250</td></tr>
+<tr onclick="show('https://upload.wikimedia.org/wikipedia/commons/7/72/Airbus_A300B2.jpg')"><td>A300B2</td><td>2</td><td>250</td></tr>
+<tr onclick="show('https://upload.wikimedia.org/wikipedia/commons/6/63/Airbus_A300B4.jpg')"><td>A300B4</td><td>2</td><td>270</td></tr>
+<tr onclick="show('https://upload.wikimedia.org/wikipedia/commons/b/b7/Airbus_A300-600.jpg')"><td>A300-600</td><td>2</td><td>270</td></tr>
+<tr onclick="show('https://upload.wikimedia.org/wikipedia/commons/2/2e/Airbus_Beluga_ST.jpg')"><td>A300-600ST Beluga</td><td>2</td><td>Carga</td></tr>
+<tr onclick="show('https://upload.wikimedia.org/wikipedia/commons/4/4d/Airbus_A310-200.jpg')"><td>A310-200</td><td>2</td><td>220</td></tr>
+<tr onclick="show('https://upload.wikimedia.org/wikipedia/commons/9/9c/Airbus_A310-300.jpg')"><td>A310-300</td><td>2</td><td>220</td></tr>
+
+<!-- A320 family -->
+<tr onclick="show('https://upload.wikimedia.org/wikipedia/commons/3/35/Airbus_A318.jpg')"><td>A318</td><td>2</td><td>132</td></tr>
+<tr onclick="show('https://upload.wikimedia.org/wikipedia/commons/6/6b/Airbus_A319.jpg')"><td>A319ceo</td><td>2</td><td>160</td></tr>
+<tr onclick="show('https://upload.wikimedia.org/wikipedia/commons/5/5a/Airbus_A319neo.jpg')"><td>A319neo</td><td>2</td><td>160</td></tr>
+<tr onclick="show('https://upload.wikimedia.org/wikipedia/commons/c/cd/Airbus_A320.jpg')"><td>A320ceo</td><td>2</td><td>180</td></tr>
+<tr onclick="show('https://upload.wikimedia.org/wikipedia/commons/2/29/Airbus_A320neo.jpg')"><td>A320neo</td><td>2</td><td>195</td></tr>
+<tr onclick="show('https://upload.wikimedia.org/wikipedia/commons/f/f7/Airbus_A321.jpg')"><td>A321ceo</td><td>2</td><td>220</td></tr>
+<tr onclick="show('https://upload.wikimedia.org/wikipedia/commons/8/8d/Airbus_A321neo.jpg')"><td>A321neo</td><td>2</td><td>240</td></tr>
+<tr onclick="show('https://upload.wikimedia.org/wikipedia/commons/1/12/Airbus_A321LR.jpg')"><td>A321LR</td><td>2</td><td>220</td></tr>
+<tr onclick="show('https://upload.wikimedia.org/wikipedia/commons/0/05/Airbus_A321XLR.jpg')"><td>A321XLR</td><td>2</td><td>220</td></tr>
+
+<!-- A330 -->
+<tr onclick="show('https://upload.wikimedia.org/wikipedia/commons/4/4c/Airbus_A330-200.jpg')"><td>A330-200</td><td>2</td><td>280</td></tr>
+<tr onclick="show('https://upload.wikimedia.org/wikipedia/commons/6/6b/Airbus_A330-300.jpg')"><td>A330-300</td><td>2</td><td>300</td></tr>
+<tr onclick="show('https://upload.wikimedia.org/wikipedia/commons/8/86/Airbus_A330-800.jpg')"><td>A330-800neo</td><td>2</td><td>257</td></tr>
+<tr onclick="show('https://upload.wikimedia.org/wikipedia/commons/f/f1/Airbus_A330-900.jpg')"><td>A330-900neo</td><td>2</td><td>287</td></tr>
+<tr onclick="show('https://upload.wikimedia.org/wikipedia/commons/0/0c/Airbus_Beluga_XL.jpg')"><td>A330-743L BelugaXL</td><td>2</td><td>Carga</td></tr>
+
+<!-- A340 -->
+<tr onclick="show('https://upload.wikimedia.org/wikipedia/commons/5/59/Airbus_A340-200.jpg')"><td>A340-200</td><td>4</td><td>261</td></tr>
+<tr onclick="show('https://upload.wikimedia.org/wikipedia/commons/3/3f/Airbus_A340-300.jpg')"><td>A340-300</td><td>4</td><td>295</td></tr>
+<tr onclick="show('https://upload.wikimedia.org/wikipedia/commons/4/4b/Airbus_A340-500.jpg')"><td>A340-500</td><td>4</td><td>313</td></tr>
+<tr onclick="show('https://upload.wikimedia.org/wikipedia/commons/9/9c/Airbus_A340-600.jpg')"><td>A340-600</td><td>4</td><td>380</td></tr>
+
+<!-- A350 -->
+<tr onclick="show('https://upload.wikimedia.org/wikipedia/commons/2/2a/Airbus_A350-900.jpg')"><td>A350-900</td><td>2</td><td>325</td></tr>
+<tr onclick="show('https://upload.wikimedia.org/wikipedia/commons/7/78/Airbus_A350-1000.jpg')"><td>A350-1000</td><td>2</td><td>410</td></tr>
+
+<!-- A380 -->
+<tr onclick="show('https://upload.wikimedia.org/wikipedia/commons/6/6b/Airbus_A380.jpg')"><td>A380-800</td><td>4</td><td>853</td></tr>
+
 </table>
 
-<div id="modal" onclick="this.style.display='none'">
-<img id="planeImg">
+<div id="modal">
+<span onclick="closeModal()">✖</span>
+<img id="img">
 </div>
 
-<footer>Projeto Caio 🚀</footer>
+<footer>Projeto Airbus Database — Caio 🚀</footer>
 
 <script>
-const planes = [
-{m:"A220-100",e:2,c:135},
-{m:"A220-300",e:2,c:160},
-
-{m:"A300B1",e:2,c:250},
-{m:"A300B2",e:2,c:250},
-{m:"A300B4",e:2,c:270},
-{m:"A300-600",e:2,c:270},
-{m:"A300-600ST Beluga",e:2,c:0},
-
-{m:"A310-200",e:2,c:220},
-{m:"A310-300",e:2,c:220},
-
-{m:"A318",e:2,c:132},
-{m:"A319ceo",e:2,c:160},
-{m:"A319neo",e:2,c:160},
-{m:"A320ceo",e:2,c:180},
-{m:"A320neo",e:2,c:195},
-{m:"A321ceo",e:2,c:220},
-{m:"A321neo",e:2,c:240},
-{m:"A321LR",e:2,c:220},
-{m:"A321XLR",e:2,c:220},
-
-{m:"A330-200",e:2,c:280},
-{m:"A330-300",e:2,c:300},
-{m:"A330-800 neo",e:2,c:257},
-{m:"A330-900 neo",e:2,c:287},
-{m:"A330-743L BelugaXL",e:2,c:0},
-
-{m:"A340-200",e:4,c:261},
-{m:"A340-300",e:4,c:295},
-{m:"A340-500",e:4,c:313},
-{m:"A340-600",e:4,c:380},
-
-{m:"A350-900",e:2,c:325},
-{m:"A350-1000",e:2,c:410},
-
-{m:"A380-800",e:4,c:853}
-];
-
-const table=document.getElementById("table");
-planes.forEach(p=>{
-table.innerHTML+=`
-<tr onclick="showImg('${p.m}')">
-<td>${p.m}</td>
-<td>${p.e}</td>
-<td>${p.c}</td>
-</tr>`;
-});
-
-function showImg(model){
-const img=document.getElementById("planeImg");
-img.src="https://source.unsplash.com/1200x800/?airbus,"+encodeURIComponent(model);
-document.getElementById("modal").style.display="flex";
+function show(src){
+  document.getElementById("img").src = src;
+  document.getElementById("modal").style.display = "flex";
 }
-
-if("serviceWorker" in navigator){
-navigator.serviceWorker.register("service-worker.js");
+function closeModal(){
+  document.getElementById("modal").style.display = "none";
 }
 </script>
 
